@@ -47,6 +47,17 @@ public class SseController {
 
         System.out.println("Messages 2");
 
+        CompletableFuture<List<Message>> messages25 = service.messages4();
+        messages25.thenAcceptAsync(messages -> {
+            try {
+                emitter.send(SseEmitter.event().name("message").data(messages, MediaType.APPLICATION_JSON));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        System.out.println("Messages 2.5");
+
         CompletableFuture<List<Message>> messages3 = service.messages3();
         messages3.thenAcceptAsync(messages -> {
             try {
@@ -58,7 +69,7 @@ public class SseController {
 
         System.out.println("Messages 3");
 
-        CompletableFuture.allOf(messages1, messages2, messages3).thenAcceptAsync(aVoid -> {
+        CompletableFuture.allOf(messages1, messages2, messages3, messages25).thenAcceptAsync(aVoid -> {
             try {
                 System.out.println("send:finished");
                 emitter.send(SseEmitter.event().name("finished").data(new ArrayList<Message>(), MediaType.APPLICATION_JSON));
