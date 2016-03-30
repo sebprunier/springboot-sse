@@ -45,4 +45,12 @@ public class MessagesService {
         return CompletableFuture.completedFuture(messages3);
     }
 
+    @Async
+    public CompletableFuture<List<Message>> messages4() throws Exception {
+        ArrayList<Message> messages4 = new ArrayList<>();
+        messages4.add(Message.of("avé dé accents û ù :-) :pig: \n et un emoji \uD83D\uDE03 ! "));
+        Thread.sleep(1000);
+        return CompletableFuture.completedFuture(messages4);
+    }
+
 }
