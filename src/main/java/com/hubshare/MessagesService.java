@@ -33,9 +33,14 @@ public class MessagesService {
     @Async
     public CompletableFuture<List<Message>> messages3() throws Exception {
         ArrayList<Message> messages3 = new ArrayList<>();
-        messages3.add(Message.of("sqdsqdsq"));
-        messages3.add(Message.of("dsdsqdsddddddddd"));
-        messages3.add(Message.of("tata"));
+        messages3.add(Message.of(">>>> START sqdsqdsq sqdsqdsq sqdsqdsq sqdsqdsq sqdsqdsq"));
+
+        for (int i = 0; i < 12000; i++) {
+            messages3.add(Message.of("dsdsqdsddddddddd dsdsqdsddddddddd dsdsqdsddddddddddsdsqdsddddddddd dsdsqdsddddddddd"));
+            messages3.add(Message.of("tata titi tutu tata titi tutu tata titi tutu tata titi tutu tata titi tutu tata titi tutu tata titi tutu tata titi tutu "));
+        }
+        messages3.add(Message.of("this is the END <<<<"));
+
         Thread.sleep(2000);
         return CompletableFuture.completedFuture(messages3);
     }
