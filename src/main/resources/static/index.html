@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>SSE Example</title>
+</head>
+<body>
+
+<h1>SSE Example</h1>
+
+
+<script>
+    var source = new EventSource("/messages");
+    source.onmessage = function(event) {
+        console.log(event.data);
+        // document.getElementById("result").innerHTML += event.data + "<br>";
+    };
+</script>
+
+</body>
+</html>
