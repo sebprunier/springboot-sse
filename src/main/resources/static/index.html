@@ -4,23 +4,49 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>SSE Example</title>
+    <style>
+        .id {
+            color: grey;
+        }
+
+        .message {
+            background-color: lightgray;
+            border: 1px solid grey;
+            padding-left: 8px;
+            margin: 8px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>SSE Example</h1>
+<h1>SSE Example with Spring Boot and Vanilla JS</h1>
 
+<img id="loading" src="loading.gif" />
+
+<div id="messages"></div>
 
 <script>
     var source = new EventSource("/messages");
 
-    source.addEventListener("message", function(e) {
-        var message = JSON.parse(e.data);
-        console.log(message);
+    var toHtml = function toHtml(message) {
+        return "<div class='message'><p><span class='id'>[#id]</span> #text</p></div>"
+                .replace("#id", message.id)
+                .replace("#text", message.text);
+    };
+
+    source.addEventListener("messages", function (e) {
+        var messages = JSON.parse(e.data);
+        console.log(messages.length + " messages received!");
+        var messagesDiv = document.getElementById("messages");
+        messages.forEach(function (message) {
+            messagesDiv.innerHTML += toHtml(message);
+        });
     }, false);
 
-    source.addEventListener("finished", function(e) {
-        console.log(">>>> CLOSE !!!!");
+    source.addEventListener("finished", function (e) {
         source.close();
+        console.log("No more messages...");
+        document.getElementById("loading").style.display = "none";
     }, false);
 
 </script>
